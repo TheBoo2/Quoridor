@@ -1,6 +1,6 @@
 package Quoridor;
 
-public class Juego2 {
+public class Juego {
     public static void main(String[] args) {
 
 
