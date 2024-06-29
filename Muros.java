@@ -1,2 +1,5 @@
 package Quoridor;
-public class Muros;
+
+public class Muros{
+
+}
