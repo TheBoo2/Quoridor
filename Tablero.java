@@ -10,6 +10,7 @@ int fil = 17;
 
 public Tablero(){
 this.setPreferredSize(new Dimension(colum * TileSize, fil * TileSize));
+this.setBackground(Color.gray);
 }
         
 }
