@@ -1,10 +1,11 @@
 package Quoridor;
 import java.awt.*;
+import java.awt.event.*;
 
 import javax.swing.*;
 
 
-public class Tablero extends JFrame{
+public class Ventana extends JFrame{
 
     private static final int Tamaño = 9; // Tamaño del tablero (9x9)
     private static final int Tamaño_Celda = 50; // Tamaño de cada celda en píxeles
@@ -17,7 +18,7 @@ public class Tablero extends JFrame{
     private JButton[][] celdas; // Matriz que representa las celdas del tablero
 
     
-    public Tablero(){
+    public Ventana(){
     setSize(Tamaño_Tablero, Tamaño_Tablero); //Tamaño de ventana
     setTitle("Quoridor");
     //setLocation(150,150);
@@ -108,14 +109,29 @@ public class Tablero extends JFrame{
 
         for (int i = 0; i < Tamaño; i++) {
             for (int j = 0; j < Tamaño; j++) {
+                final int row = i;
+                final int col = j;
                 celdas[i][j] = new JButton(); // Crea un nuevo boton para cada celda
                 celdas[i][j].setPreferredSize(new Dimension(Tamaño_Celda, Tamaño_Celda));
                 celdas[i][j].setBackground(Color.YELLOW);
                 celdas[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Agrega un borde negro a cada celda
                 pan.add(celdas[i][j]); // Agrega la celda al panel del tablero
+                celdas[i][j].addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent me){
+                        JButton botones = (JButton) me.getSource();
+                        botones.setBackground(Color.RED);
+                        System.out.println("Button clicked: " + row + col);
+                        // Aquí puedes agregar más lógica para el manejo del clic
+                    }
+                });
+            
             }
+        
         }
-    }
+        
+        
+    }       
 
 
 }
