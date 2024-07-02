@@ -1,4 +1,5 @@
 package Quoridor;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -41,7 +42,6 @@ public class Ventana extends JFrame{
         PanelDeInfo();
         MensajeJugador1();
         MensajeJugador2();
-        //Boton();
         CeldasBoton();
     }   
 
@@ -92,16 +92,6 @@ public class Ventana extends JFrame{
         etiqueta.setOpaque(true);
         downinfo.add(etiqueta);
     }
-
-    /*private void Boton(){
-
-        JButton bot = new JButton();
-
-        bot.setBounds(100, 100, 50, 50);
-        bot.setBackground(Color.RED);
-        bot.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-        pan.add(bot);
-    }*/
 
     private void CeldasBoton(){
 
