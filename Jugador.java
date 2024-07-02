@@ -6,7 +6,7 @@ public class Jugador {
     private int row; 
     private int col; 
 
-    public Player(String name, int initialWalls) {
+    public Jugador(String name, int initialWalls) {
         this.name = name;
         this.wallsLeft = initialWalls;
         
