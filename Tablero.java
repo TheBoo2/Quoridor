@@ -6,7 +6,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 
-public class Ventana extends JFrame{
+public class Tablero extends JFrame{
 
     private static final int Tamaño = 9; // Tamaño del tablero (9x9)
     private static final int Tamaño_Celda = 50; // Tamaño de cada celda en píxeles
@@ -19,7 +19,7 @@ public class Ventana extends JFrame{
     private JButton[][] celdas; // Matriz que representa las celdas del tablero
 
     
-    public Ventana(){
+    public Tablero(){
     setSize(Tamaño_Tablero, Tamaño_Tablero); //Tamaño de ventana
     setTitle("Quoridor");
     //setLocation(150,150);
