@@ -18,6 +18,18 @@ public class Tablero extends JFrame{
     private JPanel downinfo;
     private JButton[][] celdas; // Matriz que representa las celdas del tablero
 
+    //Jugadores
+    private JPanel jugador1; // Panel que representa al jugador 1
+    private JPanel jugador2; // Panel que representa al jugador 2
+
+    private int jugador1Fila = 0; // Fila inicial del jugador 1
+    private int jugador1Columna = 4; // Columna inicial del jugador 1
+    private int jugador2Fila = Tamaño - 1; // Fila inicial del jugador 2
+    private int jugador2Columna = 4; // Columna inicial del jugador 2
+
+    private boolean turnoJugador1 = true; // Variable que controla de quién es el turno
+
+
     
     public Tablero(){
     setSize(Tamaño_Tablero, Tamaño_Tablero); //Tamaño de ventana
@@ -28,6 +40,7 @@ public class Tablero extends JFrame{
     setLayout(new BorderLayout());
     setPreferredSize(new Dimension(Tamaño_Tablero + 400, Tamaño_Tablero + 200));
     pack();
+    setResizable(false);
 
 
     Compos();
@@ -43,6 +56,11 @@ public class Tablero extends JFrame{
         MensajeJugador1();
         MensajeJugador2();
         CeldasBoton();
+        jugador1 = PaneldeJugador(Color.RED);
+        PosicionJug(jugador1, jugador1Fila, jugador1Columna);
+        jugador2 = PaneldeJugador(Color.CYAN);
+        PosicionJug(jugador2, jugador2Fila, jugador2Columna);
+        //MovTecla();
     }   
 
     private void PanelDeJuego(){
@@ -109,9 +127,7 @@ public class Tablero extends JFrame{
                 celdas[i][j].addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent me){
-                        JButton botones = (JButton) me.getSource();
-                        botones.setBackground(Color.RED);
-                        System.out.println("Button clicked: " + row + col);
+                        moverJugador(row, col);
                         // Aquí puedes agregar más lógica para el manejo del clic
                     }
                 });
@@ -123,5 +139,68 @@ public class Tablero extends JFrame{
         
     }       
 
+    private JPanel PaneldeJugador(Color color) {
+        JPanel panJug = new JPanel();
+        panJug.setBackground(color); // Establece el color del panel
+        panJug.setPreferredSize(new Dimension(Tamaño_Celda, Tamaño_Celda)); // Establece el tamaño preferido del panel
+        return panJug;
+    }
 
+    // Coloca a un jugador en una celda específica
+    private void PosicionJug(JPanel panJug, int fila, int columna) {
+        celdas[fila][columna].setLayout(new BorderLayout());
+        celdas[fila][columna].add(panJug); // Agrega el panel del jugador a la celda
+        validate(); // Valida el contenedor de nivel superior del componente
+        repaint(); // Repinta el componente
+    }
+
+    private void moverJugador(int nuevaFila, int nuevaColumna) {
+        int filActual = turnoJugador1 ? jugador1Fila : jugador2Fila; // Fila a la que se moverá el jugador
+        int columnActual = turnoJugador1 ? jugador1Columna : jugador2Columna; // Columna a la que se moverá el jugador
+
+        if (esMovimientoValido(filActual, columnActual, nuevaFila, nuevaColumna)) {
+            JPanel jugador = turnoJugador1 ? jugador1 : jugador2;
+            celdas[filActual][columnActual].remove(jugador);
+            PosicionJug(jugador, nuevaFila, nuevaColumna);
+
+            if (turnoJugador1) {
+                jugador1Fila = nuevaFila;
+                jugador1Columna = nuevaColumna;
+            } else {
+                jugador2Fila = nuevaFila;
+                jugador2Columna = nuevaColumna;
+            }
+
+            turnoJugador1 = !turnoJugador1; // Cambia el turno al otro jugador
+
+        /*  Verifica que el nuevo movimiento esté dentro de los límites del tablero
+        if (nuevaFila >= 0 && nuevaFila < Tamaño && nuevaColumna >= 0 && nuevaColumna < Tamaño) {
+            if (turnoJugador1) {
+                celdas[jugador1Fila][jugador1Columna].remove(jugador1); // Remueve al jugador 1 de su posición actual
+                PosicionJug(jugador1, nuevaFila, nuevaColumna); // Coloca al jugador 1 en la nueva posición
+                jugador1Fila = nuevaFila; // Actualiza la fila del jugador 1
+                jugador1Columna = nuevaColumna; // Actualiza la columna del jugador 1
+            }
+
+        }*/
+        }
+    }
+
+        // Verifica si el movimiento es válido
+        private boolean esMovimientoValido(int filaActual, int columnaActual, int nuevaFila, int nuevaColumna) {
+            int diffFila = Math.abs(filaActual - nuevaFila);
+            int diffColumna = Math.abs(columnaActual - nuevaColumna);
+            return (diffFila == 1 && diffColumna == 0) || (diffFila == 0 && diffColumna == 1);
+        }
+               
+    /*private void MovTecla(){
+        addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent me){
+            moverJugador(me.getSource());
+                
+                ());
+            }
+        }
+    }*/
 }
