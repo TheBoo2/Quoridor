@@ -83,6 +83,7 @@ public class Tablero extends JFrame{
 
         upinfo = new JPanel();
         upinfo.setBackground(Color.WHITE);
+        //upinfo.set IMAGEN
         upinfo.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         info.add(upinfo);
 
@@ -172,17 +173,6 @@ public class Tablero extends JFrame{
             }
 
             turnoJugador1 = !turnoJugador1; // Cambia el turno al otro jugador
-
-        /*  Verifica que el nuevo movimiento esté dentro de los límites del tablero
-        if (nuevaFila >= 0 && nuevaFila < Tamaño && nuevaColumna >= 0 && nuevaColumna < Tamaño) {
-            if (turnoJugador1) {
-                celdas[jugador1Fila][jugador1Columna].remove(jugador1); // Remueve al jugador 1 de su posición actual
-                PosicionJug(jugador1, nuevaFila, nuevaColumna); // Coloca al jugador 1 en la nueva posición
-                jugador1Fila = nuevaFila; // Actualiza la fila del jugador 1
-                jugador1Columna = nuevaColumna; // Actualiza la columna del jugador 1
-            }
-
-        }*/
         }
     }
 
@@ -192,15 +182,4 @@ public class Tablero extends JFrame{
             int diffColumna = Math.abs(columnaActual - nuevaColumna);
             return (diffFila == 1 && diffColumna == 0) || (diffFila == 0 && diffColumna == 1);
         }
-               
-    /*private void MovTecla(){
-        addMouseListener(new MouseAdapter() {
-        @Override
-        public void mouseClicked(MouseEvent me){
-            moverJugador(me.getSource());
-                
-                ());
-            }
-        }
-    }*/
 }
