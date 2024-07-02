@@ -1,16 +1,11 @@
 package Quoridor;
 
 public class Juego {
+    
     public static void main(String[] args) {
-JFrame cuadro = new JFrame();
-cuadro.setLayout(new GridBagLayout());
-cuadro.setMinimumSize(new Dimension(500, 500);
-cuadro.setLocationRelativeTo(null);
+        Tablero vl = new Tablero();
 
-Tablero tablero = new Tablero();
-cuadro.add(tablero);
+        vl.setVisible(true); //hacer visible la ventana
         
-cuadro.setVisible(true);
-
     }
 }
