@@ -15,6 +15,8 @@ public class Tablero extends JFrame{
     private JPanel pan; // Panel principal que contiene el tablero
     private JPanel info; // Panel de información de los jugadores
     private JPanel upinfo;
+    private JPanel midinfo;
+    private JLabel turno;
     private JPanel downinfo;
     private JButton[][] celdas; // Matriz que representa las celdas del tablero
 
@@ -28,7 +30,7 @@ public class Tablero extends JFrame{
     private int jugador2Columna = 4; // Columna inicial del jugador 2
 
     private boolean turnoJugador1 = true; // Variable que controla de quién es el turno
-
+    //private boolean finJuego = false;
 
     
     public Tablero(){
@@ -76,16 +78,29 @@ public class Tablero extends JFrame{
     private void PanelDeInfo() {
 
         info = new JPanel();
-        info.setLayout(new GridLayout(2, 1)); // Dividido en dos subpaneles verticalmente
+        info.setLayout(new GridLayout(3, 1)); // Dividido en dos subpaneles verticalmente
 
         info.setPreferredSize(new Dimension(300, Tamaño_Tablero)); // Establecer tamaño preferido del panel de información
         getContentPane().add(info, "East"); // Agregar el segundo panel al JFrame
+
 
         upinfo = new JPanel();
         upinfo.setBackground(Color.WHITE);
         //upinfo.set IMAGEN
         upinfo.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         info.add(upinfo);
+
+
+        midinfo = new JPanel();
+        turno = new JLabel();
+        turno.setText("Turno de Jugador 1");
+        turno.setForeground(Color.BLACK);
+        turno.setBackground(Color.CYAN);        
+        turno.setOpaque(true);
+        midinfo.add(turno);
+        midinfo.setBackground(Color.RED);
+        info.add(midinfo);
+
 
         downinfo = new JPanel();
         downinfo.setBackground(Color.WHITE);
@@ -120,6 +135,7 @@ public class Tablero extends JFrame{
             for (int j = 0; j < Tamaño; j++) {
                 final int row = i;
                 final int col = j;
+
                 celdas[i][j] = new JButton(); // Crea un nuevo boton para cada celda
                 celdas[i][j].setPreferredSize(new Dimension(Tamaño_Celda, Tamaño_Celda));
                 celdas[i][j].setBackground(Color.YELLOW);
@@ -129,7 +145,7 @@ public class Tablero extends JFrame{
                     @Override
                     public void mouseClicked(MouseEvent me){
                         moverJugador(row, col);
-                        // Aquí puedes agregar más lógica para el manejo del clic
+                        actualizarTurno();
                     }
                 });
             
@@ -138,7 +154,15 @@ public class Tablero extends JFrame{
         }
         
         
-    }       
+    } 
+    
+    private void actualizarTurno() {
+        if (turnoJugador1) {
+            turno.setText("Turno de Jugador 1");
+        } else {
+            turno.setText("Turno de Jugador 2");
+        }
+    }
 
     private JPanel PaneldeJugador(Color color) {
         JPanel panJug = new JPanel();
@@ -182,4 +206,11 @@ public class Tablero extends JFrame{
             int diffColumna = Math.abs(columnaActual - nuevaColumna);
             return (diffFila == 1 && diffColumna == 0) || (diffFila == 0 && diffColumna == 1);
         }
+
+         // Muestra un mensaje de victoria y cierra el juego
+    /*private void mostrarMensajeVictoria(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje); // Muestra el mensaje en un cuadro de diálogo
+        System.exit(0); // Cierra la aplicación
+    }*/
+
 }
