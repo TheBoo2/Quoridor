@@ -42,7 +42,7 @@ public class Tablero extends JFrame{
     setLayout(new BorderLayout());
     setPreferredSize(new Dimension(Tamaño_Tablero + 400, Tamaño_Tablero));
     pack();
-    //setResizable(false);
+    setResizable(false);
 
 
     Compos();
@@ -62,6 +62,7 @@ public class Tablero extends JFrame{
         PosicionJug(jugador1, jugador1Fila, jugador1Columna);
         jugador2 = PaneldeJugador(Color.CYAN);
         PosicionJug(jugador2, jugador2Fila, jugador2Columna);
+        desactivarCeldas();
         //MovTecla();
     }   
 
@@ -98,7 +99,8 @@ public class Tablero extends JFrame{
         turno.setBackground(Color.CYAN);        
         turno.setOpaque(true);
         midinfo.add(turno);
-        midinfo.setBackground(Color.RED);
+        midinfo.setBackground(Color.BLUE);
+        midinfo.add(BotonMoverse());
         info.add(midinfo);
 
 
@@ -168,6 +170,7 @@ public class Tablero extends JFrame{
         } else {
             turno.setText("Turno de Jugador 2");
         }
+        desactivarCeldas();
     }
 
     private JPanel PaneldeJugador(Color color) {
@@ -205,16 +208,51 @@ public class Tablero extends JFrame{
             }
 
             turnoJugador1 = !turnoJugador1; // Cambia el turno al otro jugador
+            desactivarCeldas();
         }
     }
 
-        // Verifica si el movimiento es válido
-        private boolean esMovimientoValido(int filaActual, int columnaActual, int nuevaFila, int nuevaColumna) {
-            int diffFila = Math.abs(filaActual - nuevaFila);
-            int diffColumna = Math.abs(columnaActual - nuevaColumna);
-            return (diffFila == 2 && diffColumna == 0) || (diffFila == 0 && diffColumna == 2);
-        }
+    // Verifica si el movimiento es válido
+    private boolean esMovimientoValido(int filaActual, int columnaActual, int nuevaFila, int nuevaColumna) {
+        int diffFila = Math.abs(filaActual - nuevaFila);
+        int diffColumna = Math.abs(columnaActual - nuevaColumna);
+        return (diffFila == 2 && diffColumna == 0) || (diffFila == 0 && diffColumna == 2);
+    }
 
+    private JButton BotonMoverse(){
+        JButton BMover = new JButton();
+        BMover.setText("Mover");
+        BMover.setBackground(Color.RED);
+        BMover.setForeground(Color.BLACK);
+        BMover.setBounds(getBounds());
+        BMover.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                activarCeldas();
+            }
+        });
+        return(BMover);
+    }
+
+    private void activarCeldas() {
+        for (int i = 0; i < Tamaño; i++) {
+            for (int j = 0; j < Tamaño; j++) {
+                if (i % 2 == 0 && j % 2 == 0) {
+                    celdas[i][j].setEnabled(true);
+                }
+            }
+        }
+    }
+
+    private void desactivarCeldas() {
+        for (int i = 0; i < Tamaño; i++) {
+            for (int j = 0; j < Tamaño; j++) {
+                if (i % 2 == 0 && j % 2 == 0) {
+                    celdas[i][j].setEnabled(false);
+                }
+            }
+        }
+    }
          // Muestra un mensaje de victoria y cierra el juego
     /*private void mostrarMensajeVictoria(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje); // Muestra el mensaje en un cuadro de diálogo
