@@ -1,4 +1,4 @@
-package Quoridor17;
+package Quoridor;
 
 import java.awt.*;
 import java.awt.event.*;
