@@ -1,4 +1,4 @@
-package Quoridor;
+package Quoridor17;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -8,8 +8,8 @@ import javax.swing.*;
 
 public class Tablero extends JFrame{
 
-    private static final int Tamaño = 9; // Tamaño del tablero (9x9)
-    private static final int Tamaño_Celda = 50; // Tamaño de cada celda en píxeles
+    private static final int Tamaño = 17; // Tamaño del tablero (9x9)
+    private static final int Tamaño_Celda = 45; // Tamaño de cada celda en píxeles
     private static final int Tamaño_Tablero = Tamaño * Tamaño_Celda; // Tamaño total del tablero
 
     private JPanel pan; // Panel principal que contiene el tablero
@@ -35,14 +35,14 @@ public class Tablero extends JFrame{
     
     public Tablero(){
     setSize(Tamaño_Tablero, Tamaño_Tablero); //Tamaño de ventana
-    setTitle("Quoridor");
+    setTitle("Quoridor17");
     //setLocation(150,150);
     //setBounds(250, 250, 500, 500); //Posicion y tamaño de ventana
     setLocationRelativeTo(null);
     setLayout(new BorderLayout());
-    setPreferredSize(new Dimension(Tamaño_Tablero + 400, Tamaño_Tablero + 200));
+    setPreferredSize(new Dimension(Tamaño_Tablero + 400, Tamaño_Tablero));
     pack();
-    setResizable(false);
+    //setResizable(false);
 
 
     Compos();
@@ -71,7 +71,7 @@ public class Tablero extends JFrame{
 
         pan.setBackground(Color.BLACK);
         pan.setLayout(new GridLayout(Tamaño, Tamaño));
-        pan.setPreferredSize(new Dimension(Tamaño_Tablero + 100, Tamaño_Tablero));
+        pan.setPreferredSize(new Dimension(Tamaño_Tablero + 100 , Tamaño_Tablero));
         getContentPane().add(pan, "West"); // Agregar el primer panel al JFrame
     }
 
@@ -133,6 +133,7 @@ public class Tablero extends JFrame{
 
         for (int i = 0; i < Tamaño; i++) {
             for (int j = 0; j < Tamaño; j++) {
+                if (i % 2 == 0 && j % 2 == 0) {
                 final int row = i;
                 final int col = j;
 
@@ -148,13 +149,18 @@ public class Tablero extends JFrame{
                         actualizarTurno();
                     }
                 });
-            
+            } else {
+                JPanel emptyPanel = new JPanel();
+                emptyPanel.setPreferredSize(new Dimension(20, 20));
+                emptyPanel.setBackground(Color.GRAY); // Color for wall spaces
+                emptyPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Add border for visibility
+                pan.add(emptyPanel);
+                }
             }
         
         }
         
-        
-    } 
+    }
     
     private void actualizarTurno() {
         if (turnoJugador1) {
@@ -173,10 +179,12 @@ public class Tablero extends JFrame{
 
     // Coloca a un jugador en una celda específica
     private void PosicionJug(JPanel panJug, int fila, int columna) {
-        celdas[fila][columna].setLayout(new BorderLayout());
-        celdas[fila][columna].add(panJug); // Agrega el panel del jugador a la celda
-        validate(); // Valida el contenedor de nivel superior del componente
-        repaint(); // Repinta el componente
+        if (celdas[fila][columna] != null) {
+            celdas[fila][columna].setLayout(new BorderLayout());
+            celdas[fila][columna].add(panJug); // Agrega el panel del jugador a la celda
+            validate(); // Valida el contenedor de nivel superior del componente
+            repaint(); // Repinta el componente
+        }
     }
 
     private void moverJugador(int nuevaFila, int nuevaColumna) {
@@ -204,7 +212,7 @@ public class Tablero extends JFrame{
         private boolean esMovimientoValido(int filaActual, int columnaActual, int nuevaFila, int nuevaColumna) {
             int diffFila = Math.abs(filaActual - nuevaFila);
             int diffColumna = Math.abs(columnaActual - nuevaColumna);
-            return (diffFila == 1 && diffColumna == 0) || (diffFila == 0 && diffColumna == 1);
+            return (diffFila == 2 && diffColumna == 0) || (diffFila == 0 && diffColumna == 2);
         }
 
          // Muestra un mensaje de victoria y cierra el juego
