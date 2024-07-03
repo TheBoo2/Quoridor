@@ -30,6 +30,7 @@ public class Tablero extends JFrame{
     private int jugador2Columna = 4; // Columna inicial del jugador 2
 
     private boolean turnoJugador1 = true; // Variable que controla de quién es el turno
+    private boolean celdasActivadas = false;
     //private boolean finJuego = false;
 
     
@@ -152,11 +153,11 @@ public class Tablero extends JFrame{
                     }
                 });
             } else {
-                JPanel emptyPanel = new JPanel();
-                emptyPanel.setPreferredSize(new Dimension(20, 20));
-                emptyPanel.setBackground(Color.GRAY); // Color for wall spaces
-                emptyPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Add border for visibility
-                pan.add(emptyPanel);
+                celdas[i][j] = new JButton();
+                celdas[i][j].setPreferredSize(new Dimension(20, 20));
+                celdas[i][j].setBackground(Color.GRAY); // Color for wall spaces
+                celdas[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Add border for visibility
+                pan.add(celdas[i][j]);
                 }
             }
         
@@ -191,6 +192,10 @@ public class Tablero extends JFrame{
     }
 
     private void moverJugador(int nuevaFila, int nuevaColumna) {
+        if (!celdasActivadas) {
+            return; // No permitir el movimiento si las celdas no están activadas
+        }
+
         int filActual = turnoJugador1 ? jugador1Fila : jugador2Fila; // Fila a la que se moverá el jugador
         int columnActual = turnoJugador1 ? jugador1Columna : jugador2Columna; // Columna a la que se moverá el jugador
 
@@ -235,24 +240,28 @@ public class Tablero extends JFrame{
     }
 
     private void activarCeldas() {
+        celdasActivadas = true;
         for (int i = 0; i < Tamaño; i++) {
             for (int j = 0; j < Tamaño; j++) {
                 if (i % 2 == 0 && j % 2 == 0) {
                     celdas[i][j].setEnabled(true);
+                    celdas[i][j].setBackground(Color.YELLOW);
                 }
             }
         }
     }
 
     private void desactivarCeldas() {
+        celdasActivadas = false;
         for (int i = 0; i < Tamaño; i++) {
             for (int j = 0; j < Tamaño; j++) {
                 if (i % 2 == 0 && j % 2 == 0) {
                     celdas[i][j].setEnabled(false);
-                }
+                    celdas[i][j].setBackground(Color.WHITE);}
             }
         }
     }
+
          // Muestra un mensaje de victoria y cierra el juego
     /*private void mostrarMensajeVictoria(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje); // Muestra el mensaje en un cuadro de diálogo
