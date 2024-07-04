@@ -1,43 +1,33 @@
 package Quoridor;
+import javax.swing.*;
 
 public class Jugador {
-        private String name;
-    private int wallsLeft;
-    private int row; 
-    private int col; 
+    private JPanel panelJugador;
+    private Color color;
+    private int fila;
+    private int columna;
 
-    public Jugador(String name, int initialWalls) {
-        this.name = name;
-        this.wallsLeft = initialWalls;
-        
-        this.row = 0;
-        this.col = 4 ;   }
-
-    public String getName() {
-        return name;
+    public Jugador(Color color) {
+        this.color = color;
+        this.panelJugador = new JPanel();
+        this.panelJugador.setBackground(color);
+        this.panelJugador.setPreferredSize(new Dimension(Tamaño_Celda, Tamaño_Celda));
     }
 
-    public int getWallsLeft() {
-        return wallsLeft;
+    public JPanel getPanelJugador() {
+        return panelJugador;
     }
 
-    public void decrementWallsLeft() {
-        wallsLeft--;
+    public void setPosicion(int fila, int columna) {
+        this.fila = fila;
+        this.columna = columna;
     }
 
-    public int getRow() {
-        return row;
+    public int getFila() {
+        return fila;
     }
 
-    public void setRow(int row) {
-        this.row = row;
-    }
-
-    public int getCol() {
-        return col;
-    }
-
-    public void setCol(int col) {
-        this.col = col;
+    public int getColumna() {
+        return columna;
     }
 }
